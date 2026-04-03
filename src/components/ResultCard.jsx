@@ -1,46 +1,44 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 const itemVariants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4 }
-  }
+    transition: { duration: 0.4 },
+  },
 }
 
 export default function ResultCard({ result }) {
+  const { copy } = useLanguage()
   const [expandedSection, setExpandedSection] = useState(null)
 
   const sections = [
     {
       id: 'medicine',
       icon: '💊',
-      title: 'Medicine',
+      title: copy.analyze.resultFields.medicine,
       content: result.medicine,
-      color: 'from-emerald-400 to-teal-400'
     },
     {
       id: 'dosage',
       icon: '📏',
-      title: 'Dosage',
+      title: copy.analyze.resultFields.dosage,
       content: result.dosage,
-      color: 'from-amber-400 to-orange-400'
     },
     {
       id: 'purpose',
       icon: '🎯',
-      title: 'Purpose',
+      title: copy.analyze.resultFields.purpose,
       content: result.purpose,
-      color: 'from-cyan-400 to-emerald-400'
     },
     {
       id: 'precautions',
       icon: '⚠️',
-      title: 'Precautions',
+      title: copy.analyze.resultFields.precautions,
       content: result.precautions,
-      color: 'from-rose-400 to-orange-400'
     },
   ]
 
@@ -51,30 +49,28 @@ export default function ResultCard({ result }) {
       transition={{ duration: 0.5 }}
       className="space-y-4"
     >
-      {/* Confidence Score */}
       <motion.div
         variants={itemVariants}
         initial="hidden"
         animate="visible"
-        className="glass noise-overlay p-4 rounded-xl border border-emerald-200/25"
+        className="glass noise-overlay p-4 rounded-2xl border border-emerald-200/60"
       >
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-slate-300">Analysis Confidence</span>
-          <span className="text-lg font-bold bg-gradient-to-r from-emerald-200 to-teal-200 bg-clip-text text-transparent">
+          <span className="text-sm font-semibold text-slate-600">{copy.analyze.resultFields.confidence}</span>
+          <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             {result.confidence || 95}%
           </span>
         </div>
-        <div className="w-full bg-slate-900/70 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${result.confidence || 95}%` }}
             transition={{ duration: 1, ease: 'easeOut' }}
-            className="h-full bg-gradient-to-r from-emerald-400 to-teal-400"
+            className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
           />
         </div>
       </motion.div>
 
-      {/* Medicine Details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {sections.map((section, index) => (
           <motion.div
@@ -82,25 +78,18 @@ export default function ResultCard({ result }) {
             variants={itemVariants}
             initial="hidden"
             animate="visible"
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.08 }}
             onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
-            className="glass noise-overlay p-4 rounded-xl border border-white/10 cursor-pointer hover:border-emerald-200/35 transition-all duration-300 group"
+            className="glass noise-overlay p-4 rounded-2xl border border-slate-200 cursor-pointer hover:border-emerald-300 transition-all duration-300 group"
           >
             <div className="flex items-start gap-3">
-              <span className="text-2xl group-hover:scale-110 transition-transform">
-                {section.icon}
-              </span>
+              <span className="text-2xl group-hover:scale-110 transition-transform">{section.icon}</span>
               <div className="flex-1">
-                <h3 className="font-semibold mb-1 text-sm text-slate-300">
-                  {section.title}
-                </h3>
-                <p className="text-slate-100 text-sm line-clamp-2">
-                  {section.content}
-                </p>
+                <h3 className="font-semibold mb-1 text-sm text-slate-700">{section.title}</h3>
+                <p className="text-slate-800 text-sm line-clamp-2">{section.content}</p>
               </div>
             </div>
 
-            {/* Expanded view */}
             <motion.div
               initial={false}
               animate={{
@@ -111,31 +100,26 @@ export default function ResultCard({ result }) {
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <div className="pt-3 border-t border-white/10">
-                <p className="text-slate-200 text-sm leading-relaxed">
-                  {section.content}
-                </p>
+              <div className="pt-3 border-t border-slate-200">
+                <p className="text-slate-600 text-sm leading-relaxed">{section.content}</p>
               </div>
             </motion.div>
           </motion.div>
         ))}
       </div>
 
-      {/* Full Explanation */}
       <motion.div
         variants={itemVariants}
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.4 }}
-        className="glass noise-overlay p-6 rounded-xl border border-emerald-200/25"
+        className="glass noise-overlay p-6 rounded-2xl border border-emerald-200/60"
       >
         <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
           <span>📖</span>
-          Full Explanation
+          {copy.analyze.resultFields.fullExplanation}
         </h3>
-        <p className="text-slate-200 leading-relaxed text-sm">
-          {result.fullExplanation}
-        </p>
+        <p className="text-slate-700 leading-relaxed text-sm">{result.fullExplanation}</p>
       </motion.div>
     </motion.div>
   )

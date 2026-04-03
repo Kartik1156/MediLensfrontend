@@ -1,0 +1,55 @@
+<svg width="768" height="768" viewBox="0 0 768 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="84" y1="84" x2="684" y2="684" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#001E3E"/>
+      <stop offset="0.55" stop-color="#032F4F"/>
+      <stop offset="1" stop-color="#04243F"/>
+    </linearGradient>
+    <radialGradient id="ringGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(370 338) rotate(90) scale(250)">
+      <stop stop-color="#66F1FF"/>
+      <stop offset="1" stop-color="#26DDE6"/>
+    </radialGradient>
+    <radialGradient id="lensFill" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(360 350) rotate(90) scale(180)">
+      <stop stop-color="#145E78"/>
+      <stop offset="1" stop-color="#0D2E48"/>
+    </radialGradient>
+    <linearGradient id="handle" x1="510" y1="522" x2="658" y2="662" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38E6ED"/>
+      <stop offset="1" stop-color="#1379C9"/>
+    </linearGradient>
+    <linearGradient id="cross" x1="330" y1="272" x2="410" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9FCFF"/>
+      <stop offset="1" stop-color="#42E6EE"/>
+    </linearGradient>
+    <filter id="softGlow" x="140" y="140" width="500" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <rect x="84" y="84" width="600" height="600" rx="98" fill="url(#bg)"/>
+
+  <circle cx="350" cy="350" r="180" fill="none" stroke="url(#ringGlow)" stroke-width="26"/>
+  <circle cx="350" cy="350" r="145" fill="url(#lensFill)" stroke="#0C395A" stroke-width="8"/>
+
+  <rect x="319" y="239" width="62" height="192" rx="8" fill="url(#cross)"/>
+  <rect x="254" y="304" width="192" height="62" rx="8" fill="url(#cross)"/>
+
+  <rect x="500" y="522" width="154" height="84" rx="42" transform="rotate(45 500 522)" fill="url(#handle)" stroke="#0F5FB0" stroke-width="5"/>
+
+  <path d="M500 484C500 448 528 420 564 420H602C638 420 666 448 666 484C666 520 638 548 602 548H581L554 572V548H564C528 548 500 520 500 484Z" fill="#66F1F4" stroke="#1188BE" stroke-width="5"/>
+  <circle cx="548" cy="484" r="7" fill="#0F5E8A"/>
+  <circle cx="576" cy="484" r="7" fill="#0F5E8A"/>
+  <circle cx="604" cy="484" r="7" fill="#0F5E8A"/>
+
+  <g filter="url(#softGlow)">
+    <circle cx="274" cy="244" r="9" fill="#30ECFF"/>
+    <circle cx="426" cy="244" r="8" fill="#30ECFF"/>
+    <circle cx="455" cy="274" r="6" fill="#30ECFF"/>
+    <circle cx="268" cy="382" r="8" fill="#30ECFF"/>
+    <circle cx="302" cy="398" r="10" fill="#30ECFF"/>
+  </g>
+
+  <path d="M230 166L236 180L250 186L236 192L230 206L224 192L210 186L224 180L230 166Z" fill="#E8FEFF"/>
+  <path d="M568 334L575 350L591 357L575 364L568 380L561 364L545 357L561 350L568 334Z" fill="#E8FEFF"/>
+  <path d="M568 404L575 420L591 427L575 434L568 450L561 434L545 427L561 420L568 404Z" fill="#E8FEFF"/>
+</svg>

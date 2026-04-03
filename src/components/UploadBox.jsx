@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function UploadBox({ onUpload, preview, fileInputRef }) {
+  const { copy } = useLanguage()
   const [isDragActive, setIsDragActive] = useState(false)
 
   const handleDrag = (e) => {
     e.preventDefault()
     e.stopPropagation()
+
     if (e.type === 'dragenter' || e.type === 'dragover') {
       setIsDragActive(true)
     } else if (e.type === 'dragleave') {
@@ -21,10 +24,7 @@ export default function UploadBox({ onUpload, preview, fileInputRef }) {
 
     const files = e.dataTransfer.files
     if (files && files[0]) {
-      const changeEvent = {
-        target: { files: files }
-      }
-      onUpload(changeEvent)
+      onUpload({ target: { files } })
     }
   }
 
@@ -50,16 +50,13 @@ export default function UploadBox({ onUpload, preview, fileInputRef }) {
         onDragOver={handleDrag}
         onDrop={handleDrop}
         htmlFor="image-input"
-        className={`glass noise-overlay cursor-pointer block p-8 rounded-2xl border-2 border-dashed transition-all duration-300 ${
+        className={`glass noise-overlay cursor-pointer block p-8 rounded-[2rem] border-2 border-dashed transition-all duration-300 ${
           isDragActive
-            ? 'border-emerald-300 bg-emerald-300/10 scale-105'
-            : 'border-emerald-200/35 bg-slate-900/45 hover:border-emerald-200/60 hover:bg-slate-900/70'
+            ? 'border-cyan-300 bg-cyan-50 scale-[1.01]'
+            : 'border-cyan-200 bg-white hover:border-cyan-300 hover:bg-cyan-50/50'
         }`}
       >
-        <motion.div
-          className="text-center"
-          animate={isDragActive ? { scale: 1.05 } : { scale: 1 }}
-        >
+        <motion.div className="text-center" animate={isDragActive ? { scale: 1.05 } : { scale: 1 }}>
           <motion.div
             animate={isDragActive ? { y: -5 } : { y: 0 }}
             transition={{ duration: 0.3 }}
@@ -68,13 +65,11 @@ export default function UploadBox({ onUpload, preview, fileInputRef }) {
             {isDragActive ? '📤' : '📸'}
           </motion.div>
 
-          <h3 className="text-xl font-semibold mb-2">
-            {isDragActive ? 'Drop your prescription here' : 'Upload Your Prescription'}
+          <h3 className="text-xl md:text-2xl font-semibold mb-2">
+            {isDragActive ? copy.analyze.dropPrompt : copy.analyze.uploadTitle}
           </h3>
 
-          <p className="text-slate-300 mb-4">
-            Drag and drop or click to select an image
-          </p>
+          <p className="text-slate-600 mb-5 max-w-md mx-auto leading-relaxed">{copy.analyze.uploadHint}</p>
 
           <motion.button
             type="button"
@@ -86,22 +81,19 @@ export default function UploadBox({ onUpload, preview, fileInputRef }) {
             }}
             className="btn-primary inline-block"
           >
-            Choose File
+            {copy.analyze.uploadAction}
           </motion.button>
 
-          <p className="text-xs text-slate-400 mt-4">
-            Supported formats: JPG, PNG, WebP (Max 10MB)
-          </p>
+          <p className="text-xs text-slate-500 mt-4">{copy.analyze.uploadFormats}</p>
         </motion.div>
       </motion.label>
 
-      {/* Loading indicator for drag */}
       {isDragActive && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 rounded-2xl bg-emerald-300/5 pointer-events-none"
+          className="absolute inset-0 rounded-[2rem] bg-cyan-200/35 pointer-events-none"
         />
       )}
     </motion.div>

@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function VoiceButton({ text }) {
+  const { language, copy } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(false)
-  const [language, setLanguage] = useState('en-IN')
+  const [voiceLanguage, setVoiceLanguage] = useState(language === 'hi' ? 'hi-IN' : 'en-IN')
   const [isSpeaking, setIsSpeaking] = useState(false)
+
+  useEffect(() => {
+    setVoiceLanguage(language === 'hi' ? 'hi-IN' : 'en-IN')
+  }, [language])
 
   useEffect(() => {
     return () => {
@@ -21,7 +27,7 @@ export default function VoiceButton({ text }) {
     }
 
     const utterance = new SpeechSynthesisUtterance(text)
-    utterance.lang = language
+    utterance.lang = voiceLanguage
     utterance.rate = 0.95
     utterance.pitch = 1
     utterance.volume = 1
@@ -46,12 +52,11 @@ export default function VoiceButton({ text }) {
 
   return (
     <div className="space-y-4">
-      {/* Play Button */}
       <motion.button
         onClick={handleSpeak}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full p-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-green-500 text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-emerald-400/40 border border-emerald-100/25"
+        className="w-full p-4 rounded-2xl bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-emerald-300/50 border border-emerald-200/60"
       >
         <motion.span
           animate={isSpeaking ? { rotate: 360 } : { rotate: 0 }}
@@ -59,19 +64,18 @@ export default function VoiceButton({ text }) {
         >
           {isPlaying ? '⏸️' : '▶️'}
         </motion.span>
-        {isPlaying ? 'Stop Playback' : 'Play Explanation'}
+        {isPlaying ? copy.voice.stop : copy.voice.play}
       </motion.button>
 
-      {/* Language Toggle */}
       <div className="flex gap-2">
         {[
-          { code: 'en-IN', label: '🇮🇳 English', name: 'English' },
-          { code: 'hi-IN', label: 'हिन्दी', name: 'Hindi' },
+          { code: 'en-IN', label: copy.voice.english },
+          { code: 'hi-IN', label: copy.voice.hindi },
         ].map((lang) => (
           <motion.button
             key={lang.code}
             onClick={() => {
-              setLanguage(lang.code)
+              setVoiceLanguage(lang.code)
               if (isPlaying) {
                 window.speechSynthesis.cancel()
                 setIsPlaying(false)
@@ -80,9 +84,9 @@ export default function VoiceButton({ text }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className={`flex-1 py-2 px-3 rounded-lg font-semibold text-sm transition-all duration-300 ${
-              language === lang.code
-                ? 'bg-emerald-500 text-white border border-emerald-200/30'
-                : 'bg-slate-900/70 border border-emerald-200/25 text-slate-300 hover:border-emerald-200/70'
+              voiceLanguage === lang.code
+                ? 'bg-emerald-600 text-white border border-emerald-200/60'
+                : 'bg-white border border-slate-200 text-slate-600 hover:border-emerald-300'
             }`}
           >
             {lang.label}
@@ -90,7 +94,6 @@ export default function VoiceButton({ text }) {
         ))}
       </div>
 
-      {/* Speaking Indicator */}
       <AnimatePresence>
         {isSpeaking && (
           <motion.div
@@ -98,12 +101,12 @@ export default function VoiceButton({ text }) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex items-center justify-center gap-1 text-emerald-300 text-sm"
+            className="flex items-center justify-center gap-1 text-emerald-700 text-sm"
           >
             <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.6, repeat: Infinity }}>
               🔊
             </motion.span>
-            Speaking...
+            {copy.voice.speaking}
           </motion.div>
         )}
       </AnimatePresence>
