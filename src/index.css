@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(22, 163, 74, 0.2) 0%, rgba(22, 163, 74, 0) 36%),
+    radial-gradient(circle at 88% 0%, rgba(45, 212, 191, 0.2) 0%, rgba(45, 212, 191, 0) 30%),
+    radial-gradient(circle at 50% 88%, rgba(251, 146, 60, 0.14) 0%, rgba(251, 146, 60, 0) 33%),
+    linear-gradient(120deg, #041015 0%, #071b22 45%, #0b1017 100%);
+  color: #eef3f8;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.015em;
+}
+
+#root {
+  position: relative;
+  isolation: isolate;
+}
+
+#root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at center, black 28%, transparent 86%);
+  z-index: -2;
+}
+
+/* Modern glass effect */
+.glass {
+  backdrop-filter: blur(14px);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 12px 35px rgba(2, 6, 23, 0.35);
+}
+
+/* Smooth shadow */
+.shadow-glow {
+  box-shadow: 0 15px 50px rgba(20, 184, 166, 0.23);
+}
+
+/* Button variants */
+.btn-primary {
+  @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 active:scale-95;
+  background: linear-gradient(120deg, #0ea5a8, #14b8a6 50%, #22c55e);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-secondary {
+  @apply px-6 py-3 border rounded-xl font-semibold text-white transition-all duration-300 active:scale-95;
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(94, 234, 212, 0.28);
+}
+
+.btn-secondary:hover {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(45, 212, 191, 0.95);
+}
+
+.btn-icon {
+  @apply w-12 h-12 rounded-full text-white flex items-center justify-center cursor-pointer transition-all duration-300 active:scale-95;
+  background: linear-gradient(120deg, #0f766e, #0ea5a8);
+  border: 1px solid rgba(153, 246, 228, 0.34);
+}
+
+.btn-icon:hover {
+  background: linear-gradient(120deg, #0d9488, #14b8a6);
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* Input styling */
+input[type="file"],
+input[type="text"],
+textarea {
+  @apply w-full px-4 py-3 border rounded-xl text-white transition-all duration-300;
+  background: rgba(15, 23, 42, 0.76);
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #e2e8f0;
+}
+
+input[type="file"]::placeholder,
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: rgba(203, 213, 225, 0.48);
+}
+
+input[type="file"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgb(45, 212, 191);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.16);
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-300;
+  transform: translateY(0);
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 42px rgba(20, 184, 166, 0.15);
+}
+
+.gradient-stroke {
+  position: relative;
+}
+
+.gradient-stroke::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(130deg, rgba(45, 212, 191, 0.8), rgba(251, 191, 36, 0.6));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+}
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 0.6px, transparent 0.6px);
+  background-size: 8px 8px;
+}

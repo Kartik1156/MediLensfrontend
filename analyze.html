@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analyze Prescription | MediLens</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="analyze-body">
+  <div class="page-shell">
+    <nav class="navbar card">
+      <a class="brand" href="index.html">🧠 MediLens</a>
+      <a class="ghost-link" href="index.html">Home</a>
+    </nav>
+
+    <section class="card analyze-intro">
+      <h1>AI Prescription Decoder</h1>
+      <p>Upload your prescription image to decode medicine details and hear a simple explanation.</p>
+    </section>
+
+    <section class="card upload-section">
+      <h2>1) Upload Prescription</h2>
+      <input id="imageInput" class="file-input" type="file" accept="image/*" />
+
+      <div id="previewWrap" class="preview-wrap" aria-live="polite">
+        <img id="previewImage" alt="Prescription preview" />
+      </div>
+
+      <label for="ocrCorrection" class="field-label">Optional OCR correction notes</label>
+      <textarea
+        id="ocrCorrection"
+        class="text-area"
+        placeholder="Example: Tablet name appears as Crocin 500 mg."
+      ></textarea>
+
+      <div class="button-row">
+        <button id="analyzeBtn" class="primary-button" type="button">Analyze Prescription</button>
+      </div>
+
+      <p id="statusText" class="status-text" aria-live="polite"></p>
+    </section>
+
+    <section id="resultSection" class="card result-section" aria-live="polite">
+      <div class="result-header">
+        <h2>2) Decoded Summary</h2>
+        <span class="confidence-tag">Confidence: 92%</span>
+      </div>
+
+      <div class="result-grid">
+        <article class="result-item">
+          <p class="result-label">💊 Medicine</p>
+          <p id="medicineText" class="result-value">-</p>
+        </article>
+
+        <article class="result-item">
+          <p class="result-label">🕒 Dosage</p>
+          <p id="dosageText" class="result-value">-</p>
+        </article>
+
+        <article class="result-item">
+          <p class="result-label">🎯 Purpose</p>
+          <p id="purposeText" class="result-value">-</p>
+        </article>
+
+        <article class="result-item">
+          <p class="result-label">⚠️ Precautions</p>
+          <p id="precautionsText" class="result-value">-</p>
+        </article>
+      </div>
+
+      <div class="button-row">
+        <button id="listenBtn" class="secondary-button" type="button">🔊 Listen Explanation</button>
+
+        <select id="languageSelect" class="language-select" aria-label="Voice language">
+          <option value="en-IN" selected>English (India)</option>
+          <option value="hi-IN">Hindi (India)</option>
+        </select>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
